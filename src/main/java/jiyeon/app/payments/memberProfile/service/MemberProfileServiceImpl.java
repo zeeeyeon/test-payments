@@ -15,19 +15,17 @@ import java.util.List;
 public class MemberProfileServiceImpl implements MemberProfileService {
 
     private final MemberProfileRepository memberProfileRepository;
+    private final ProfileViewCountService profileViewCountService;
 
     @Override
     @Transactional(readOnly = true)
     public List<MemberProfileListResponse> getProfiles(SortType sortType, int page, int size) {
-        return memberProfileRepository.findAllWithSortingAndPaging(sortType, page, size);
+        return memberProfileRepository.searchProfilesBySortAndPage(sortType, page, size);
     }
 
     @Override
     @Transactional
     public void increaseViewCount(Long profileId) {
-        MemberProfile profile = memberProfileRepository.findById(profileId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 프로필입니다."));
-
-        profile.increaseViewCount();
+        profileViewCountService.increaseViewCount(profileId);
     }
 }

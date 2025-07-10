@@ -18,11 +18,20 @@ public enum SortType {
         this.order = order;
     }
 
-    public OrderSpecifier<?> toOrderSpecifier(QMemberProfile q) {
+    public OrderSpecifier<?>[] getOrderSpecifiers(QMemberProfile q) {
         return switch (this) {
-            case NAME_ASC -> new OrderSpecifier<>(order, q.name);
-            case VIEW_DESC -> new OrderSpecifier<>(order, q.viewCount);
-            case REGISTERED_DESC -> new OrderSpecifier<>(order, q.registeredAt);
+            case NAME_ASC -> new OrderSpecifier[]{
+                    new OrderSpecifier<>(Order.ASC, q.name),
+                    new OrderSpecifier<>(Order.ASC, q.id)
+            };
+            case VIEW_DESC -> new OrderSpecifier[]{
+                    new OrderSpecifier<>(Order.DESC, q.viewCount),
+                    new OrderSpecifier<>(Order.DESC, q.id)
+            };
+            case REGISTERED_DESC -> new OrderSpecifier[]{
+                    new OrderSpecifier<>(Order.DESC, q.registeredAt),
+                    new OrderSpecifier<>(Order.DESC, q.id)
+            };
         };
     }
 }

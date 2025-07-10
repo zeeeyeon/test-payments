@@ -17,7 +17,7 @@ public class MemberProfileQueryRepositoryImpl implements MemberProfileQueryRepos
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<MemberProfileListResponse> findAllWithSortingAndPaging(SortType sortType, int page, int size) {
+    public List<MemberProfileListResponse> searchProfilesBySortAndPage(SortType sortType, int page, int size) {
         return queryFactory
                 .select(new QMemberProfileListResponse(
                         memberProfile.name,
@@ -25,7 +25,7 @@ public class MemberProfileQueryRepositoryImpl implements MemberProfileQueryRepos
                         memberProfile.registeredAt
                 ))
                 .from(memberProfile)
-                .orderBy(sortType.toOrderSpecifier(memberProfile))
+                .orderBy(sortType.getOrderSpecifiers(memberProfile))
                 .offset((long) page * size)
                 .limit(size)
                 .fetch();

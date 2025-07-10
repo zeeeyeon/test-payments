@@ -10,7 +10,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "member_profile")
+@Table(name = "member_profile",
+        indexes = {
+                @Index(name = "idx_profile_name_id", columnList = "name ASC, id ASC"),
+                @Index(name = "idx_profile_view_count_id", columnList = "view_count DESC, id DESC"),
+                @Index(name = "idx_profile_registered_at_id", columnList = "registered_at DESC, id DESC")
+        }
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberProfile extends BaseTimeEntity {
 
@@ -18,7 +24,7 @@ public class MemberProfile extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 10)
     private String name;
 
     @Column(name = "view_count", nullable = false)
@@ -33,8 +39,7 @@ public class MemberProfile extends BaseTimeEntity {
         this.registeredAt = registeredAt;
     }
 
-    public void increaseViewCount() {
-        this.viewCount++;
+    public void increaseViewCount(int count) {
+        this.viewCount += count;
     }
 }
-

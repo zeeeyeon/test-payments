@@ -6,5 +6,5 @@ import jiyeon.app.payments.memberProfile.dto.SortType;
 import java.util.List;
 
 public interface MemberProfileQueryRepository {
-    List<MemberProfileListResponse> findAllWithSortingAndPaging(SortType sortType, int page, int size);
+    List<MemberProfileListResponse> searchProfilesBySortAndPage(SortType sortType, int page, int size);
 }
