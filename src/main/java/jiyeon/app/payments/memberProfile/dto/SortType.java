@@ -2,9 +2,7 @@ package jiyeon.app.payments.memberProfile.dto;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.ComparableExpressionBase;
-import com.querydsl.core.types.dsl.PathBuilder;
-import jiyeon.app.payments.global.memberProfile.domain.QMemberProfile;
+import jiyeon.app.payments.memberProfile.domain.QMemberProfile;
 
 public enum SortType {
 

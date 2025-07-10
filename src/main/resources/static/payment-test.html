@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>토스 결제 테스트</title>
+    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+</head>
+<body>
+<h2>포인트 결제 테스트</h2>
+
+<form id="payment-form">
+    <label>
+        회원 ID:
+        <input type="number" id="memberId" value="1" required />
+    </label><br><br>
+
+    <label>
+        충전 금액 (₩):
+        <input type="number" id="amount" value="1000" required />
+    </label><br><br>
+
+    <button type="submit">결제하기</button>
+</form>
+
+<script>
+    const clientKey = "test_ck_kYG57Eba3G6vqNWPlELk8pWDOxmA"
+    const tossPayments = TossPayments(clientKey);
+
+    document.getElementById("payment-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const memberId = document.getElementById("memberId").value;
+        const amount = document.getElementById("amount").value;
+        const orderId = "order-" + Date.now();
+        const orderName = "포인트 충전";
+
+        const chargeRes = await fetch("http://localhost:8080/api/point-charge/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ memberId, amount, orderId })
+        });
+
+        if (!chargeRes.ok) {
+            alert("서버 결제 생성 실패");
+            return;
+        }
+
+        tossPayments.requestPayment("카드", {
+            amount: parseInt(amount),
+            orderId,
+            orderName,
+            customerName: "테스트회원",
+            successUrl: `http://localhost:8080/success.html?orderId=${orderId}&amount=${amount}`,
+            failUrl: "http://localhost:8080/fail.html"
+        });
+    });
+</script>
+</body>
+</html>

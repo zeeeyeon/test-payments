@@ -2,13 +2,14 @@ package jiyeon.app.payments.memberProfile.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jiyeon.app.payments.memberProfile.dto.MemberProfileListResponse;
-import jiyeon.app.payments.global.memberProfile.dto.QMemberProfileListResponse;
+import jiyeon.app.payments.memberProfile.dto.QMemberProfileListResponse;
 import jiyeon.app.payments.memberProfile.dto.SortType;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static jiyeon.app.payments.global.memberProfile.domain.QMemberProfile.memberProfile;
+import static jiyeon.app.payments.memberProfile.domain.QMemberProfile.memberProfile;
+
 
 @RequiredArgsConstructor
 public class MemberProfileQueryRepositoryImpl implements MemberProfileQueryRepository {

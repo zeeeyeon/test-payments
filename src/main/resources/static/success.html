@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><title>결제 성공</title></head>
+<body>
+<h2>결제 성공!</h2>
+<p>결제가 성공적으로 처리되었습니다.</p>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentKey = urlParams.get("paymentKey");
+    const orderId = urlParams.get("orderId");
+    const amount = urlParams.get("amount");
+
+    fetch("http://localhost:8080/api/point-charge/confirm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paymentKey, orderId, amount })
+    }).then(res => {
+        if (res.ok) return res.json();
+        throw new Error("결제 승인 실패");
+    }).then(data => {
+        console.log("결제 승인 결과:", data);
+    }).catch(err => {
+        alert(err.message);
+    });
+</script>
+</body>
+</html>
