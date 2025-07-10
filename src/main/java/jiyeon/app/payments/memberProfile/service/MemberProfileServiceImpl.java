@@ -25,9 +25,10 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     @Override
     @Transactional
     public void increaseViewCount(Long profileId) {
-        MemberProfile profile = memberProfileRepository.findById(profileId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 프로필입니다."));
+        int updatedCount = memberProfileRepository.incrementViewCount(profileId);
 
-        profile.increaseViewCount();
+        if (updatedCount == 0) {
+            throw new IllegalArgumentException("해당 프로필이 존재하지 않습니다.");
+        }
     }
 }
