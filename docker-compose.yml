@@ -11,6 +11,8 @@ services:
       MYSQL_USER: payments
       MYSQL_PASSWORD: 1234
     volumes:
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - mysql_data:/var/lib/mysql
     networks:
       - internal
