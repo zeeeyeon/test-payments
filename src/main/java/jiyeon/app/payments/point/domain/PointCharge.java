@@ -19,30 +19,21 @@ public class PointCharge extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Long amount;
+
+    private String paymentKey;
+
+    private String orderId;
+
+    private String method;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_profile_id")
     private MemberProfile member;
-
-    @Column(nullable = false)
-    @Comment("충전 요청 금액")
-    private Long amount;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    @Comment("결제 상태 (PENDING, SUCCESS, FAILED)")
-    private PaymentStatus status;
-
-    @Column(length = 100)
-    @Comment("토스 결제 키 (결제 승인용)")
-    private String paymentKey;
-
-    @Column(length = 100)
-    @Comment("주문 ID")
-    private String orderId;
-
-    @Column(length = 100)
-    @Comment("결제 수단 (카드, 가상계좌 등)")
-    private String method;
 
     public static PointCharge createPending(MemberProfile member, Long amount, String orderId) {
         PointCharge charge = new PointCharge();
@@ -61,5 +52,9 @@ public class PointCharge extends BaseTimeEntity {
 
     public void markFailed() {
         this.status = PaymentStatus.FAILED;
+    }
+
+    public boolean isApproved() {
+        return this.status == PaymentStatus.SUCCESS;
     }
 }

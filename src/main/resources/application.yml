@@ -17,3 +17,7 @@ spring:
 
 server:
   port: 8080
+
+payment:
+  secret-key: test_sk_eqRGgYO1r5KvJNqOPWja3QnN2Eya
+  confirm-url: https://api.tosspayments.com/v1/payments/confirm
