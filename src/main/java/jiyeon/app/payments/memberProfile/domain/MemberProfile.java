@@ -33,6 +33,8 @@ public class MemberProfile extends BaseTimeEntity {
     @Column(name = "registered_at", nullable = false)
     private LocalDateTime registeredAt;
 
+    private int point;
+
     public MemberProfile(String name, int viewCount, LocalDateTime registeredAt) {
         this.name = name;
         this.viewCount = viewCount;
@@ -41,5 +43,9 @@ public class MemberProfile extends BaseTimeEntity {
 
     public void increaseViewCount(int count) {
         this.viewCount += count;
+    }
+
+    public void addPoint(long amount) {
+        this.point += amount;
     }
 }
