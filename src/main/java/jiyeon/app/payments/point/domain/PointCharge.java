@@ -54,7 +54,7 @@ public class PointCharge extends BaseTimeEntity {
         this.status = PaymentStatus.FAILED;
     }
 
-    public boolean isApproved() {
+    public boolean isAlreadyApproved() {
         return this.status == PaymentStatus.SUCCESS;
     }
 }
